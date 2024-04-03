@@ -20,6 +20,8 @@ public class TrainingRecordController {
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/results")
     public ResponseEntity<?> saveTrainingResults(@RequestBody TrainingResultDto trainingResult) {
+        System.out.println(trainingResult.getUserId());
+        System.out.println(trainingResult.getResults());
         trainingRecordService.updateTrainingResults(trainingResult);
         return ResponseEntity.ok().build();
     }

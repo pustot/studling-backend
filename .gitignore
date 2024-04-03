@@ -35,3 +35,4 @@ target/
 # Ignore Spring Boot application properties file
 /application.properties
 /target
+/target/
