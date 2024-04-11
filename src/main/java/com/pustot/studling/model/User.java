@@ -6,9 +6,9 @@ import jakarta.persistence.*;
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Long id;
+    private String id;
 
     @Column(name = "user_name")
     private String userName;
@@ -19,7 +19,8 @@ public class User {
     public User() {
     }
 
-    public User(String userName, String email) {
+    public User(String id, String userName, String email) {
+        this.id = id;
         this.userName = userName;
         this.email = email;
     }

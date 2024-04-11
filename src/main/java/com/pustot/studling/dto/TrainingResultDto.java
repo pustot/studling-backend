@@ -3,15 +3,15 @@ package com.pustot.studling.dto;
 import java.util.List;
 
 public class TrainingResultDto {
-    private Long userId;
+    private String userId;
     private List<WordResult> results;
 
     // getter 和 setter
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
@@ -24,15 +24,15 @@ public class TrainingResultDto {
     }
 
     public static class WordResult {
-        private Long wordId;
+        private String wordId;
         private Boolean correct;
 
         // getter 和 setter
-        public Long getWordId() {
+        public String getWordId() {
             return wordId;
         }
 
-        public void setWordId(Long wordId) {
+        public void setWordId(String wordId) {
             this.wordId = wordId;
         }
 

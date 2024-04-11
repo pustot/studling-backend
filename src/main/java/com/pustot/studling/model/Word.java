@@ -7,9 +7,9 @@ import jakarta.persistence.*;
 @Table(name = "words")
 public class Word {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "word_id")
-    private Long id;
+    private String id;
 
     @Column(name = "word_name")
     private String wordName;
@@ -24,7 +24,8 @@ public class Word {
     public Word() {
     }
 
-    public Word(String wordName, String wordRoma, String wordMeaning) {
+    public Word(String id, String wordName, String wordRoma, String wordMeaning) {
+        this.id = id;
         this.wordName = wordName;
         this.wordRoma = wordRoma;
         this.wordMeaning = wordMeaning;

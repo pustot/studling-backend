@@ -33,14 +33,16 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) {
-        User user = new User("admin", "admin@example.com");
+        User user = new User("default1", "admin", "admin@example.com");
+        User user2 = new User("c714ca08-7021-70f4-318d-ff9a51d36a89", "default2", "default2@example.com");
         userRepository.save(user);
+        userRepository.save(user2);
 
-        wordRepository.save(new Word("请", "cing2", ""));
-        wordRepository.save(new Word("你", "nei5", ""));
-        wordRepository.save(new Word("好", "hou2", ""));
-        wordRepository.save(new Word("放", "fong3", ""));
-        wordRepository.save(new Word("低", "dai1", ""));
+        wordRepository.save(new Word("1", "请", "cing2", ""));
+        wordRepository.save(new Word("2", "你", "nei5", ""));
+        wordRepository.save(new Word("3", "好", "hou2", ""));
+        wordRepository.save(new Word("4", "放", "fong3", ""));
+        wordRepository.save(new Word("5", "低", "dai1", ""));
 
         mongoDocumentRepository.save(new MongoDocument(
                 "id0101234567", "MyDocu", "Nidou jau houdo houdo noijung."

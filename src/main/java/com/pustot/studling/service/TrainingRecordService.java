@@ -8,6 +8,8 @@ import com.pustot.studling.repository.TrainingRecordRepository;
 import com.pustot.studling.repository.UserRepository;
 import com.pustot.studling.repository.WordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,19 +31,26 @@ public class TrainingRecordService {
     @Autowired
     private WordRepository wordRepository;
 
+    public String getCurrentUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getName(); // 这通常对应于 JWT 的 'sub' 字段，即 userID
+    }
+
     @Transactional
     public void updateTrainingResults(TrainingResultDto trainingResultDto) {
+        System.out.println("Cela Celala la user-pas-id: " + getCurrentUserId());
+
         System.out.println("Recieeshita");
-        System.out.println(trainingResultDto.getUserId());
+        //System.out.println(trainingResultDto.getUserId());
         System.out.println(trainingResultDto.getResults().getFirst().getWordId());
-        System.out.println(userRepository.findById(trainingResultDto.getUserId()));
+        System.out.println(userRepository.findById(getCurrentUserId()));
 
         for (TrainingResultDto.WordResult result : trainingResultDto.getResults()) {
             Optional<TrainingRecord> recordOpt = trainingRecordRepository.findByUserIdAndWordId(
-                    trainingResultDto.getUserId(), result.getWordId());
+                    getCurrentUserId(), result.getWordId());
 
             // 从仓库中查找User和Word实体
-            User user = userRepository.findById(trainingResultDto.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));
+            User user = userRepository.findById(getCurrentUserId()).orElseThrow(() -> new RuntimeException("User not found"));
             Word word = wordRepository.findById(result.getWordId()).orElseThrow(() -> new RuntimeException("Word not found"));
 
             TrainingRecord record = recordOpt.orElseGet(() -> new TrainingRecord(user, word));
