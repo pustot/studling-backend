@@ -53,6 +53,8 @@ npm run start
 
 用户注册与登陆功能目前用 Amazon Cognito，以减少个人项目安全系统维护难度。
 
+- [ ] 后端发现 email 为新，则将此新用户加入库
+
 ## 数据存储
 
 ### 用户信息表通用结构 Users
@@ -63,17 +65,19 @@ CREATE TABLE users (
     email VARCHAR(255) NOT NULL UNIQUE,
     cognito_sub VARCHAR(255) NOT NULL, -- 存储用户在Cognito中的唯一标识符
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX (email)
 );
 ```
 
 ### 字词信息表通用结构 XXWords
 
 ```sql
-CREATE TABLE xx_words (
+CREATE TABLE zh_yue_can_words (
     word_id INT AUTO_INCREMENT PRIMARY KEY,
     word VARCHAR(255) NOT NULL,
     pronunciation VARCHAR(255),
+    meaning VARCHAR(255),
     example_combination VARCHAR(255),
     example_sentence TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -86,7 +90,7 @@ CREATE TABLE xx_words (
 ### 训练信息表通用结构 XXTrainings
 
 ```sql
-CREATE TABLE xx_user_word_trainings (
+CREATE TABLE zh_yue_can_masteries (
     user_id INT NOT NULL,
     word_id INT NOT NULL,
     recent_results VARCHAR(10) DEFAULT '0000000000', -- 最近10次训练结果，0表示错误，1表示正确
@@ -94,7 +98,7 @@ CREATE TABLE xx_user_word_trainings (
     last_attempt_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (user_id, word_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id),
-    FOREIGN KEY (word_id) REFERENCES xx_words(word_id),
+    FOREIGN KEY (word_id) REFERENCES zh_yue_can_words(word_id),
     INDEX (user_id, accuracy, last_attempt_date) -- 优先训练正确率最低、训练间隔最长者（ORDER BY accuracy ASC, last_attempt_date ASC）
 );
 ```
@@ -124,9 +128,9 @@ CREATE TABLE daily_training_stats (
 - （首先完成广州话版，跟住切韵TUPA）
 - [x] 纯前端版：每次10字，输入后按键或回车显示正误，显示进度条
 - [ ] 显示切韵音韵地位作为参考
-- [ ] DB 建立 users words trainings 表，并加入 words 表数据
-- [ ] 集成 MyBatis Plus
-- [ ] 后端可以随机取词给前端
+- [ ] DB 建立 users words trainings 表，并加入 words 表数据（仅word,pronunciation）
+- [x] 集成 MyBatis Plus
+- [x] 后端可以随机取词给前端
 - [ ] 前端训练数据保存到 trainings 表
 - [ ] 后端可以根据以往训练情况取优先训练之词（与随机取词结合）
 - [ ] 统计并显示总训练量、今日训练量（&每日、趋势）

@@ -1,31 +1,24 @@
-package com.pustot.studling.model;
-
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "users")
-public class User {
-    @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private String id;
-
-    @Column(name = "user_name")
-    private String userName;
-
-    @Column(name = "email")
-    private String email;
-
-    public User() {
-    }
-
-    public User(String id, String userName, String email) {
-        this.id = id;
-        this.userName = userName;
-        this.email = email;
-    }
-
-    // private String password; // 密码，实际开发中应加密存储
-
-    // 构造函数、getter和setter省略
-}
+//package com.pustot.studling.model;
+//
+//import com.baomidou.mybatisplus.annotation.IdType;
+//import com.baomidou.mybatisplus.annotation.TableId;
+//import com.baomidou.mybatisplus.annotation.TableName;
+//import lombok.Data;
+//
+//import java.time.LocalDateTime;
+//
+//@Data
+//@TableName("users")
+//public class User {
+//
+//    @TableId(value = "user_id", type = IdType.AUTO)
+//    private Integer userId;
+//
+//    private String email;
+//
+//    private String cognitoSub;
+//
+//    private LocalDateTime createdAt;
+//
+//    private LocalDateTime updatedAt;
+//}
