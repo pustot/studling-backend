@@ -28,7 +28,7 @@
 
 后端
 
-Spring Boot (Java) + MySQL + Redis
+Spring Boot (Java) + MyBatis Plus + MySQL + Redis
 
 ```shell
 mvn spring-boot:run
@@ -124,7 +124,8 @@ CREATE TABLE daily_training_stats (
 - （首先完成广州话版，跟住切韵TUPA）
 - [x] 纯前端版：每次10字，输入后按键或回车显示正误，显示进度条
 - [ ] 显示切韵音韵地位作为参考
-- [ ] 后端建立 users words trainings 表，并加入 words 表数据
+- [ ] DB 建立 users words trainings 表，并加入 words 表数据
+- [ ] 集成 MyBatis Plus
 - [ ] 后端可以随机取词给前端
 - [ ] 前端训练数据保存到 trainings 表
 - [ ] 后端可以根据以往训练情况取优先训练之词（与随机取词结合）
