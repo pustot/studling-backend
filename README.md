@@ -127,10 +127,11 @@ CREATE TABLE daily_training_stats (
 
 - （首先完成广州话版，跟住切韵TUPA）
 - [x] 纯前端版：每次10字，输入后按键或回车显示正误，显示进度条
-- [ ] 显示切韵音韵地位作为参考
+- [x] 显示切韵音韵地位作为参考
 - [x] DB 建立 users words trainings 表，并加入 words 表数据（仅word,pronunciation）
 - [x] 集成 MyBatis Plus
 - [x] 后端可以随机取词给前端
+- [x] 前端移植纯前端版界面
 - [ ] 前端训练数据保存到 trainings 表
 - [ ] 后端可以根据以往训练情况取优先训练之词（与随机取词结合）
 - [ ] 统计并显示总训练量、今日训练量（&每日、趋势）
