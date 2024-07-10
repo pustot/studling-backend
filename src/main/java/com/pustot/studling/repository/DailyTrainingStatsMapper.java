@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.pustot.studling.model.DailyTrainingStats;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 @Mapper
@@ -36,4 +37,8 @@ public interface DailyTrainingStatsMapper extends BaseMapper<DailyTrainingStats>
             "</script>"
     })
     void updateDailyStats(@Param("userId") int userId, @Param("languageCode") String languageCode, @Param("isCorrect") boolean isCorrect);
+
+    // New method to get today's training stats
+    @Select("SELECT * FROM daily_training_stats WHERE user_id = #{userId} AND language_code = #{languageCode} AND training_date = CURDATE()")
+    DailyTrainingStats getTodayTrainingStats(@Param("userId") int userId, @Param("languageCode") String languageCode);
 }
