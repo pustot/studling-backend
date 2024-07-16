@@ -1,14 +1,14 @@
 package com.pustot.studling.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pustot.studling.config.JsonRedisTemplate;
+import com.pustot.studling.config.RabbitMQConfig;
 import com.pustot.studling.model.User;
 import com.pustot.studling.repository.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -21,6 +21,12 @@ public class UserService {
 
     @Autowired
     private JsonRedisTemplate jsonRedisTemplate;
+
+    @Autowired
+    private RabbitMQSender rabbitMQSender;
+
+    @Autowired
+    private RabbitMQConfig rabbitMQConfig;
 
     private static final String REDIS_KEY_PREFIX = "User:";
 
@@ -66,7 +72,18 @@ public class UserService {
             if (!Objects.equals(existingUser.getCognitoSub(), user.getCognitoSub())) {
                 existingUser.setCognitoSub(user.getCognitoSub());
                 userMapper.updateById(existingUser);
+                rabbitMQSender.send(rabbitMQConfig.exchange().getName(), "user.update", existingUser);
             }
         }
+    }
+
+    public void updateUserInfo(User user) throws Exception {
+//        ByteArrayOutputStream bo = new ByteArrayOutputStream();
+//        ObjectOutputStream oo = new ObjectOutputStream(bo);
+//        oo.writeObject(user);
+//        byte[] javaByte = bo.toByteArray();
+        String jsonUser = new ObjectMapper().writeValueAsString(user);
+        System.out.println("sent " + jsonUser);
+        rabbitMQSender.send(rabbitMQConfig.exchange().getName(), "user.update-username", jsonUser);
     }
 }
