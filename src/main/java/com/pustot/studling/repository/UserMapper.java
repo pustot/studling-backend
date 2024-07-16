@@ -24,5 +24,5 @@ public interface UserMapper extends BaseMapper<User> {
             "</set>" +
             "WHERE user_id = #{userId} AND #{userId} IS NOT NULL" +
             "</script>")
-    int updateUserInfo(User user);
+    void updateUserInfo(User user);
 }
