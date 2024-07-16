@@ -30,7 +30,7 @@
 
 后端
 
-Spring Boot (Java) + MyBatis Plus + MySQL + Redis
+Java + Spring Boot + MyBatis Plus + MySQL + Redis + RabbitMQ
 
 ```shell
 mvn spring-boot:run
@@ -38,7 +38,7 @@ mvn spring-boot:run
 
 前端
 
-React (TypeScript) + MaterialUI
+TypeScript + React + MaterialUI
 
 ```shell
 npm install
@@ -56,6 +56,7 @@ npm run start
 用户注册与登陆功能目前用 Amazon Cognito，以减少个人项目安全系统维护难度。
 
 - [x] 后端发现 email 为新，则将此新用户加入库（PUT /api/users {email, cognitoSub}）
+- [x] 将用户名等用户信息，配合邮箱号，发送到后端，后端将更新消息发给 RabbitMQ，并由订阅者将其更新到数据库与 Redis
 
 ## 数据存储
 
@@ -65,7 +66,7 @@ npm run start
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(255) NOT NULL UNIQUE,
-    username VARCHAR(255),  -- 新添加的列，用户名，随便改
+    username VARCHAR(255),  -- 用户名
     cognito_sub VARCHAR(255), -- 存储用户在Cognito中的唯一标识符
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
