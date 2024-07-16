@@ -13,11 +13,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    // TODO: 把创建和更新分开，创建直连后端，更新交给MQ
     @PutMapping("/users")
-    public void upsertUser(@RequestBody UserDTO userDTO) {
+    public void saveOrUpdateUserIfNull(@RequestBody UserDTO userDTO) {
         User user = new User();
         user.setEmail(userDTO.getEmail());
         user.setCognitoSub(userDTO.getCognitoSub());
-        userService.saveOrUpdateUser(user);
+        userService.saveOrUpdateUserIfNull(user);
     }
 }

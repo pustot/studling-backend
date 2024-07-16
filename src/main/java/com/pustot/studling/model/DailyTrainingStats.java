@@ -8,10 +8,10 @@ import lombok.Data;
 @TableName("daily_training_stats")
 public class DailyTrainingStats {
     @TableId
-    private int userId;
+    private Integer userId;
     private String languageCode;
     private java.sql.Date trainingDate;
-    private int totalAttempts;
-    private int correctAttempts;
-    private int incorrectAttempts;
+    private Integer totalAttempts;
+    private Integer correctAttempts;
+    private Integer incorrectAttempts;
 }
