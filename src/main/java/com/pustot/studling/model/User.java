@@ -19,6 +19,8 @@ public class User implements Serializable {
 
     private String email;
 
+    private String username;
+
     private String cognitoSub;
 
     private LocalDateTime createdAt;

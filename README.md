@@ -65,6 +65,7 @@ npm run start
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(255) NOT NULL UNIQUE,
+    username VARCHAR(255),  -- 新添加的列，用户名，随便改
     cognito_sub VARCHAR(255), -- 存储用户在Cognito中的唯一标识符
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

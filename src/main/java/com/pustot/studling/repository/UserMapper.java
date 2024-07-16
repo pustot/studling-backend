@@ -5,6 +5,7 @@ import com.pustot.studling.model.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
@@ -14,4 +15,14 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Select("SELECT user_id FROM users WHERE email = #{email}")
     Integer findUserIdByEmail(String email);
+
+    @Update("<script>" +
+            "UPDATE users " +
+            "<set>" +
+            "<if test='username != null'>username = #{username}, </if>" +
+            "updated_at = CURRENT_TIMESTAMP" +
+            "</set>" +
+            "WHERE user_id = #{userId} AND #{userId} IS NOT NULL" +
+            "</script>")
+    int updateUserInfo(User user);
 }

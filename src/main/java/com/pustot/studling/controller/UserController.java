@@ -4,10 +4,7 @@ import com.pustot.studling.dto.UserDTO;
 import com.pustot.studling.model.User;
 import com.pustot.studling.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
@@ -28,13 +25,23 @@ public class UserController {
     @PutMapping("/users/update-info")
     public void updateUserInfo(@RequestBody UserDTO userDTO) {
         User user = new User();
+        // ID 待消费者查找以提高解耦效率
         user.setEmail(userDTO.getEmail());
-        // TODO: 仅供测试，未来加 username 字段
-        user.setCognitoSub(userDTO.getUsername());
+        user.setUsername(userDTO.getUsername());
         try {
             userService.updateUserInfo(user);
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    @GetMapping("/users/info/name/{email}")
+    public String getUserInfoName(@PathVariable String email) {
+        System.out.println(email);
+        if (email != null) {
+            User user = userService.findByEmail(email);
+            return user.getUsername();
+        }
+        return null;
     }
 }
