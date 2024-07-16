@@ -19,8 +19,6 @@ public class UserMessageListener {
 
     @RabbitListener(queues = "user.queue")
     public void handleUserMessage(String jsonMessage) {
-//        ByteArrayInputStream bi = new ByteArrayInputStream(bytes);
-//        ObjectInputStream oi = null;
         try {
             System.out.println("received " + jsonMessage);
             ObjectMapper objectMapper = new ObjectMapper();

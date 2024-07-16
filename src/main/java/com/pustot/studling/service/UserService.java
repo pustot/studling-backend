@@ -78,10 +78,6 @@ public class UserService {
     }
 
     public void updateUserInfo(User user) throws Exception {
-//        ByteArrayOutputStream bo = new ByteArrayOutputStream();
-//        ObjectOutputStream oo = new ObjectOutputStream(bo);
-//        oo.writeObject(user);
-//        byte[] javaByte = bo.toByteArray();
         String jsonUser = new ObjectMapper().writeValueAsString(user);
         System.out.println("sent " + jsonUser);
         rabbitMQSender.send(rabbitMQConfig.exchange().getName(), "user.update-username", jsonUser);

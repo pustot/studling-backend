@@ -11,8 +11,6 @@ public class RabbitMQSender {
     private RabbitTemplate rabbitTemplate;
 
     public void send(String exchange, String routingKey, Object message) {
-
         rabbitTemplate.convertAndSend(exchange, routingKey, message);
-
     }
 }
